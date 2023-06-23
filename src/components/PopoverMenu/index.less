@@ -1,0 +1,137 @@
+// 弹窗页面
+.popoverMenu {
+  :global {
+    display: flex;
+    padding: 4px;
+
+    .block-left {
+      width: 130px;
+      margin-right: 20px;
+      border-right: solid 1px #f0f0f0;
+      ul {
+        display: block;
+        padding-left: 10px;
+        & > li {
+          display: block;
+          padding: 4px;
+          font-size: 16px;
+          cursor: pointer;
+
+          &:active,
+          &:hover,
+          &:focus,
+          &.active {
+            // background: #f5f5f5;
+            .title {
+              .menu-border {
+                transform: scale(1);
+              }
+            }
+          }
+          .title {
+            position: relative;
+            display: inline-block;
+            > span.anticon {
+              margin-right: 8px;
+            }
+            .menu-border {
+              bottom: 4px;
+              width: 100%;
+              border-bottom: 2px solid #d02828;
+              transform: scaleX(0);
+              transform-origin: left;
+              transition: transform 0.15s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+
+    .block-right {
+      flex: 1;
+      float: right;
+      width: calc(100% - 220px);
+      height: 100%;
+
+      // 右边二级菜单列表显示区
+      .second-menu-container {
+        margin-right: 25%;
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+        -webkit-column-gap: var(--nav-grid-column-gap);
+        -moz-column-gap: var(--nav-grid-column-gap);
+        column-gap: var(--nav-grid-column-gap);
+
+        .second-menu-item {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          box-sizing: border-box;
+          padding-bottom: 30px;
+          vertical-align: top;
+          break-inside: avoid;
+          // 二级菜单头
+          .second-menu-title {
+            display: block;
+            display: flex;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            padding: 0;
+            color: #ff6a00; // 颜色， 应该由外部设置
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 16px;
+            text-align: left;
+            text-decoration: none;
+          }
+          // 三级菜单项
+          .second-menu-subMenu {
+            padding-bottom: 12px;
+            // line-height: 24px;
+            line-height: 1.1em;
+            // a {
+            //   color: ;
+            // }
+            // &:hover {
+            //   background: #f5f5f5;
+            // }
+          }
+        }
+      }
+
+      // 最右侧广告区 与 .second-menu-container 并列
+      .second-menu-right {
+        position: absolute;
+        top: 0;
+        left: 75%;
+        width: 23%;
+        margin: 10px;
+        .second-menu-right-wrap {
+          margin-bottom: 24px;
+          padding: 10px;
+          padding-bottom: 5px;
+          border: 1px solid #e2e2e2;
+          .second-menu-right-item-title {
+            display: block;
+            display: flex;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            padding: 0;
+            color: #ff6a00;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 14px;
+            text-align: left;
+            text-decoration: none;
+          }
+
+          .second-menu-right-item-content {
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

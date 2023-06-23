@@ -76,7 +76,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'My Demo',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -148,6 +148,7 @@ export default defineConfig({
       projectName: 'swagger',
     },
   ],
+  links: [{ rel: 'icon', href: '/favicon.ico', type: 'image/x-icon' }],
   mfsu: {
     strategy: 'normal',
   },

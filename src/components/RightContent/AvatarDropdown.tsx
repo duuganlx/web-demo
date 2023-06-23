@@ -1,8 +1,9 @@
 import { outLogin } from '@/services/ant-design-pro/api';
+import { transferStrToColorHex } from '@/services/utils';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
-import { Spin } from 'antd';
+import { Avatar, Spin } from 'antd';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
@@ -20,7 +21,7 @@ export const AvatarName = () => {
   return <span className="anticon">{currentUser?.name}</span>;
 };
 
-export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, children }) => {
+export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   /**
    * 退出登录，并且将当前的 url 保存
    */
@@ -53,6 +54,11 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
       '&:hover': {
         backgroundColor: token.colorBgTextHover,
       },
+    };
+  });
+  const dropdownClassName = useEmotionCss(() => {
+    return {
+      color: 'white',
     };
   });
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -121,13 +127,22 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
 
   return (
     <HeaderDropdown
+      className={dropdownClassName}
       menu={{
         selectedKeys: [],
         onClick: onMenuClick,
         items: menuItems,
       }}
     >
-      {children}
+      <span>
+        <Avatar
+          size="small"
+          style={{ background: transferStrToColorHex(currentUser.name), color: 'white' }}
+        >
+          xxx
+        </Avatar>
+        <span>xxxx</span>
+      </span>
     </HeaderDropdown>
   );
 };
