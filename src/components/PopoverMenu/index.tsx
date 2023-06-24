@@ -92,7 +92,6 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
         'ul > li ': {
           '.active, &:hover, &:active': {
             background: token.colorBgTextActive,
-            // color: token.colorPrimaryActive,
             '.title': {
               color: token.colorPrimaryActive,
             },
@@ -144,7 +143,6 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
             return (
               <div key={item.path} className="second-menu-item">
                 {/* 二级菜单头 */}
-                {/* <Link to={item.path!}>{item.name}</Link> */}
                 <div className="second-menu-title">{item.name}</div>
                 {/* 二级菜单子项 */}
                 {(item.children || [item]).map((subItem) => {
@@ -215,6 +213,12 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
       <Divider style={{ height: '1.5em', backgroundColor: '#fff' }} type="vertical" />
       <Popover
         placement="bottom"
+        overlayStyle={{
+          width: 'calc(100vw - 24px)',
+          padding: '4px',
+          top: '32px',
+        }}
+        arrow={false}
         content={renderContent()}
         open={open}
         onOpenChange={(openIn) => {

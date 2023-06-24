@@ -10,7 +10,7 @@ export const LayoutContentView: React.FC<LayoutContentViewProps> = (props) => {
   return (
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.defaultAlgorithm,
       }}
     >
       {children}

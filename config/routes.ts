@@ -29,6 +29,19 @@ export default [
     component: './Welcome',
   },
   {
+    path: '/scene',
+    name: '场景样例',
+    icon: 'StarOutlined',
+    routes: [
+      {
+        name: '结算明细报表',
+        path: '/scene/operstldetail',
+        component: './Scene/OperStlDetail',
+        hideInBreadcrumb: true,
+      },
+    ],
+  },
+  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',

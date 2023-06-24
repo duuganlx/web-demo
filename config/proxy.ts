@@ -22,6 +22,13 @@ export default {
   //   },
   // },
 
+  dev: {
+    '/api/datahub/': {
+      target: 'http://eqw.eam.com',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
   /**
    * @name 详细的代理配置
    * @doc https://github.com/chimurai/http-proxy-middleware
