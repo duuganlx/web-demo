@@ -129,14 +129,6 @@ const EChartsDemoView: React.FC = () => {
           ],
         },
       },
-      // {
-      //   name: 'Alpha',
-      //   type: 'line',
-      //   gridIndex: 0,
-      //   xAxisIndex: 0,
-      //   yAxisIndex: 0,
-      //   data: balances.map((item) => +(item.alpha?.toFixed(2) || 0)),
-      // },
       {
         name: '基准累计盈亏',
         type: 'line',
@@ -188,12 +180,12 @@ const EChartsDemoView: React.FC = () => {
         return;
       }
 
-      // console.log(xIndex, balances, balances[xIndex]);
       const targetTradeDate = +BALANCES_DATA[xIndex].tradeDate / 1000;
       setTradeDate(targetTradeDate);
     });
   }
 
+  console.log(tradeDate);
   return (
     <ReactECharts
       ref={echartRef}
