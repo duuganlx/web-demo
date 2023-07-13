@@ -2,7 +2,7 @@ import { AccountBookOutlined, TeamOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Tabs } from 'antd';
 import { useState } from 'react';
-import G2PlotDemo from './g2plotdemo';
+import CompareDemo from './CompareDemo';
 import style from './index.less';
 
 const SettlementProductView: React.FC = () => {
@@ -11,7 +11,7 @@ const SettlementProductView: React.FC = () => {
   const renderTab = () => {
     switch (tabKey) {
       case 'product':
-        return <G2PlotDemo />;
+        return <CompareDemo />;
       case 'manager':
         return 'yyy';
       default:
