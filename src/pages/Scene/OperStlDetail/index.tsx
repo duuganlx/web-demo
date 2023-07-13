@@ -2,8 +2,8 @@ import { AccountBookOutlined, TeamOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Tabs } from 'antd';
 import { useState } from 'react';
+import G2PlotDemo from './g2plotdemo';
 import style from './index.less';
-import SettleDetailByProduct from './settleDetailByProduct';
 
 const SettlementProductView: React.FC = () => {
   const [tabKey, setTabKey] = useState<string>('product');
@@ -11,7 +11,7 @@ const SettlementProductView: React.FC = () => {
   const renderTab = () => {
     switch (tabKey) {
       case 'product':
-        return <SettleDetailByProduct />;
+        return <G2PlotDemo />;
       case 'manager':
         return 'yyy';
       default:
@@ -34,7 +34,7 @@ const SettlementProductView: React.FC = () => {
               label: (
                 <div>
                   <AccountBookOutlined style={{ marginRight: 4 }} />
-                  按产品
+                  G2Plot
                 </div>
               ),
               key: 'product',
@@ -43,7 +43,7 @@ const SettlementProductView: React.FC = () => {
               label: (
                 <div>
                   <TeamOutlined style={{ marginRight: 4 }} />
-                  按投资经理
+                  ECharts
                 </div>
               ),
               key: 'manager',
