@@ -1,8 +1,9 @@
-import { Datum, Mix, MixOptions } from '@antv/g2plot';
+import { Annotation, Datum, Mix, MixOptions } from '@antv/g2plot';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
-import { BALANCES_DATA, BalanceItem } from '../data';
+import { BalanceItem } from '../data';
 import { formatNumber } from '../utils';
+
 type LineItem = {
   tradeDate: string;
   value: number;
@@ -19,6 +20,22 @@ type DisplayDataItem = {
   line: LineItem[];
   column: ColumnItem[];
 };
+
+function markTradeDateLine(xIndex: number): Annotation {
+  const markLine: Annotation = {
+    id: 'markTradeDate',
+    type: 'line',
+    start: [xIndex, 'min'],
+    end: [xIndex, 'max'],
+    style: {
+      lineDash: [4, 4],
+      lineWidth: 1,
+      stroke: 'red',
+    },
+  };
+
+  return markLine;
+}
 
 function toDisplayDataType(data: BalanceItem[]) {
   const vertData: DisplayDataItem = {
@@ -57,6 +74,8 @@ function renderG2PlotMix(container: HTMLDivElement, data: DisplayDataItem) {
     autoFit: true,
     appendPadding: [30, 70, 25, 70],
     padding: [0, 0, 0, 0],
+    renderer: 'canvas', // canvas / svg
+    useDeferredLabel: false,
     legend: {
       category: {
         layout: 'horizontal',
@@ -72,6 +91,11 @@ function renderG2PlotMix(container: HTMLDivElement, data: DisplayDataItem) {
     },
     tooltip: {
       shared: true,
+      showCrosshairs: true,
+      crosshairs: {
+        type: 'x',
+        follow: true,
+      },
       // BUG 无效配置
       formatter: (datum: Datum) => {
         console.log(datum);
@@ -129,19 +153,7 @@ function renderG2PlotMix(container: HTMLDivElement, data: DisplayDataItem) {
               },
             },
           },
-          annotations: [
-            {
-              id: 'markTradeDate',
-              type: 'line',
-              start: [100, 'min'],
-              end: [100, 'max'],
-              style: {
-                lineDash: [4, 4],
-                lineWidth: 2,
-                stroke: 'red',
-              },
-            },
-          ],
+          annotations: [markTradeDateLine(0)],
         },
       },
       {
@@ -178,20 +190,7 @@ function renderG2PlotMix(container: HTMLDivElement, data: DisplayDataItem) {
               },
             },
           },
-          annotations: [
-            {
-              top: true, // TODO 不知道具体影响情况
-              id: 'markTradeDate',
-              type: 'line',
-              start: [100, 'min'],
-              end: [100, 'max'],
-              style: {
-                lineDash: [4, 4],
-                lineWidth: 2,
-                stroke: 'red',
-              },
-            },
-          ],
+          annotations: [markTradeDateLine(0)],
         },
       },
     ],
@@ -208,38 +207,8 @@ function updateMarkTradeDate(xIndex: number, mix: Mix) {
   const columneView = mix.chart.views[1];
 
   mix.removeAnnotations([{ id: 'markTradeDate' }]);
-  mix.addAnnotations(
-    [
-      {
-        id: 'markTradeDate',
-        type: 'line',
-        start: [xIndex, 'min'],
-        end: [xIndex, 'max'],
-        style: {
-          lineDash: [4, 4],
-          lineWidth: 2,
-          stroke: 'red',
-        },
-      },
-    ],
-    lineView,
-  );
-  mix.addAnnotations(
-    [
-      {
-        id: 'markTradeDate',
-        type: 'line',
-        start: [xIndex, 'min'],
-        end: [xIndex, 'max'],
-        style: {
-          lineDash: [4, 4],
-          lineWidth: 2,
-          stroke: 'red',
-        },
-      },
-    ],
-    columneView,
-  );
+  mix.addAnnotations([markTradeDateLine(xIndex)], lineView);
+  mix.addAnnotations([markTradeDateLine(xIndex)], columneView);
 }
 
 // 假设tradeDate传入的都是格式为2022-10-22
@@ -257,7 +226,13 @@ function calcXIndex(tradeDate: string, data: BalanceItem[]) {
   return xIndex;
 }
 
-const G2PlotDemoView: React.FC = () => {
+type G2PlotDemoViewProps = {
+  balancesData: BalanceItem[];
+};
+
+const G2PlotDemoView: React.FC<G2PlotDemoViewProps> = (props) => {
+  const { balancesData } = props;
+
   const container = useRef<HTMLDivElement | null>(null);
   const chart = useRef<Mix | null>(null);
 
@@ -269,20 +244,19 @@ const G2PlotDemoView: React.FC = () => {
     }
 
     container.current.innerHTML = '';
-    const convertData = toDisplayDataType(BALANCES_DATA);
+    const convertData = toDisplayDataType(balancesData);
     chart.current = renderG2PlotMix(container.current, convertData);
 
     // 注册事件
     chart.current.on('plot:click', (evt: any) => {
       const { x, y } = evt;
       const targetTradeDate = chart.current?.chart.getSnapRecords({ x, y })[0]._origin.tradeDate;
-      const xi = calcXIndex(targetTradeDate, BALANCES_DATA);
+      const xi = calcXIndex(targetTradeDate, balancesData);
       setXIndex(xi);
     });
   }, []);
 
   useEffect(() => {
-    console.log(xIndex);
     if (chart.current) {
       updateMarkTradeDate(xIndex, chart.current);
     }

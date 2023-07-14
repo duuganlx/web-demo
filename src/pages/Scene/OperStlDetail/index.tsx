@@ -3,6 +3,7 @@ import { PageContainer } from '@ant-design/pro-components';
 import { Tabs } from 'antd';
 import { useState } from 'react';
 import CompareDemo from './CompareDemo';
+import G2PlotTypeDemo from './G2PlotTypeDemo';
 import style from './index.less';
 
 const SettlementProductView: React.FC = () => {
@@ -13,7 +14,7 @@ const SettlementProductView: React.FC = () => {
       case 'product':
         return <CompareDemo />;
       case 'manager':
-        return 'yyy';
+        return <G2PlotTypeDemo />;
       default:
         return null;
     }
@@ -34,7 +35,7 @@ const SettlementProductView: React.FC = () => {
               label: (
                 <div>
                   <AccountBookOutlined style={{ marginRight: 4 }} />
-                  G2Plot
+                  对比
                 </div>
               ),
               key: 'product',
@@ -43,7 +44,7 @@ const SettlementProductView: React.FC = () => {
               label: (
                 <div>
                   <TeamOutlined style={{ marginRight: 4 }} />
-                  ECharts
+                  类型
                 </div>
               ),
               key: 'manager',

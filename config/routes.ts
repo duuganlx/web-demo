@@ -34,7 +34,7 @@ export default [
     icon: 'StarOutlined',
     routes: [
       {
-        name: '结算明细报表',
+        name: '绘图',
         path: '/scene/operstldetail',
         component: './Scene/OperStlDetail',
         hideInBreadcrumb: true,

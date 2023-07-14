@@ -1,12 +1,37 @@
 import dayjs from 'dayjs';
 import ReactECharts, { EChartsOption } from 'echarts-for-react';
-import React, { useState } from 'react';
-import { BALANCES_DATA } from '../data';
+import React, { useEffect, useState } from 'react';
+import { BalanceItem } from '../data';
 
-const EChartsDemoView: React.FC = () => {
+type EChartsDemoViewProps = { balancesData: BalanceItem[] };
+
+const EChartsDemoView: React.FC<EChartsDemoViewProps> = (props) => {
+  const { balancesData } = props;
+
   const [tradeDate, setTradeDate] = useState<number>(0);
 
   const echartRef = React.useRef<ReactECharts>(null);
+
+  useEffect(() => {
+    console.log('ECharts');
+    if (echartRef.current) {
+      const ech = echartRef.current.getEchartsInstance();
+
+      ech.getZr().on('click', (event) => {
+        const xIndex = ech.convertFromPixel({ seriesIndex: 0 }, [event.offsetX, event.offsetY])[0];
+
+        if (!xIndex) {
+          return;
+        }
+        if (balancesData[xIndex] === undefined) {
+          return;
+        }
+
+        const targetTradeDate = +balancesData[xIndex].tradeDate / 1000;
+        setTradeDate(targetTradeDate);
+      });
+    }
+  }, []);
 
   const echartsOptions: EChartsOption = {
     grid: [
@@ -46,17 +71,17 @@ const EChartsDemoView: React.FC = () => {
         gridIndex: 0,
         triggerEvent: true,
         show: false,
-        data: BALANCES_DATA.map((item) => item.tradeDate).map((item) =>
-          dayjs(+item).format('YYYY-MM-DD'),
-        ),
+        data: balancesData
+          .map((item) => item.tradeDate)
+          .map((item) => dayjs(+item).format('YYYY-MM-DD')),
       },
       {
         type: 'category',
         triggerEvent: true,
         gridIndex: 1,
-        data: BALANCES_DATA.map((item) => item.tradeDate).map((item) =>
-          dayjs(+item).format('YYYY-MM-DD'),
-        ),
+        data: balancesData
+          .map((item) => item.tradeDate)
+          .map((item) => dayjs(+item).format('YYYY-MM-DD')),
       },
     ],
     yAxis: [
@@ -112,7 +137,7 @@ const EChartsDemoView: React.FC = () => {
         gridIndex: 0,
         xAxisIndex: 0,
         yAxisIndex: 0,
-        data: BALANCES_DATA.map((item) => +(item.pnl?.toFixed(2) || 0)),
+        data: balancesData.map((item) => +(item.pnl?.toFixed(2) || 0)),
         markLine: {
           silent: 'true',
           symbol: 'none',
@@ -135,7 +160,7 @@ const EChartsDemoView: React.FC = () => {
         gridIndex: 0,
         xAxisIndex: 0,
         yAxisIndex: 0,
-        data: BALANCES_DATA.map((item) => +(item.bmPnl?.toFixed(2) || 0)),
+        data: balancesData.map((item) => +(item.bmPnl?.toFixed(2) || 0)),
       },
       {
         name: '手续费',
@@ -143,7 +168,7 @@ const EChartsDemoView: React.FC = () => {
         gridIndex: 1,
         xAxisIndex: 1,
         yAxisIndex: 1,
-        data: BALANCES_DATA.map((item) => +(item.commission?.toFixed(2) || 0)),
+        data: balancesData.map((item) => +(item.commission?.toFixed(2) || 0)),
         markLine: {
           silent: 'true',
           symbol: 'none',
@@ -166,26 +191,6 @@ const EChartsDemoView: React.FC = () => {
     },
   };
 
-  if (echartRef.current) {
-    const ech = echartRef.current.getEchartsInstance();
-
-    ech.getZr().on('click', (event) => {
-      const xIndex = ech.convertFromPixel({ seriesIndex: 0 }, [event.offsetX, event.offsetY])[0];
-
-      if (!xIndex) {
-        return;
-      }
-      if (BALANCES_DATA[xIndex] === undefined) {
-        // message.info('操作异常，请重试');
-        return;
-      }
-
-      const targetTradeDate = +BALANCES_DATA[xIndex].tradeDate / 1000;
-      setTradeDate(targetTradeDate);
-    });
-  }
-
-  console.log(tradeDate);
   return (
     <ReactECharts
       ref={echartRef}

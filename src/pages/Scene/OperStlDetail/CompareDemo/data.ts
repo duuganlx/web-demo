@@ -1,9 +1,30 @@
+import dayjs from 'dayjs';
+
 export type BalanceItem = {
   pnl: number;
   tradeDate: string;
   bmPnl: number;
   commission: number;
 };
+
+export function generateBalancesData(num: number): BalanceItem[] {
+  const data: BalanceItem[] = [];
+
+  let tradeDate = dayjs('1970-01-01');
+  for (let i = 0; i < num; i++) {
+    const tmp: BalanceItem = {
+      pnl: Math.random(),
+      tradeDate: '' + tradeDate.unix() * 1000,
+      bmPnl: Math.random(),
+      commission: Math.random() * 10000,
+    };
+
+    data.push(tmp);
+    tradeDate = tradeDate.add(1, 'day');
+  }
+
+  return data;
+}
 
 export const BALANCES_DATA: BalanceItem[] = [
   {
@@ -1901,5 +1922,262 @@ export const BALANCES_DATA: BalanceItem[] = [
     tradeDate: '1647360000000',
     bmPnl: -0.30799873868269384,
     commission: 0,
+  },
+];
+
+// =====================================================================================================================
+export interface LiquidityItem {
+  id: string;
+  datetime: string;
+  marginTradingBalance: number;
+  financingBalance: number;
+  securityLoanBalance: number;
+  maringBuyAmount: number;
+  shortSellAmount: number;
+  marketValueCpr: number;
+  marginTradingAmount: number;
+  marginTradingCpr: number;
+}
+
+export const LIQUIDITY_DATA = [
+  {
+    id: '39c52ed9-01b0-4690-9d49-f1c47137a31c',
+    datetime: '2023-06-14',
+    marginTradingBalance: 16029.52,
+    financingBalance: 15107.76,
+    securityLoanBalance: 921.76,
+    maringBuyAmount: 721.46,
+    shortSellAmount: 67.94,
+    marketValueCpr: 2.25,
+    marginTradingAmount: 789.4,
+    marginTradingCpr: 7.88,
+  },
+  {
+    id: 'a50dee20-452f-4d96-ae95-95445b6f2892',
+    datetime: '2023-06-15',
+    marginTradingBalance: 16038.91,
+    financingBalance: 15100.34,
+    securityLoanBalance: 938.57,
+    maringBuyAmount: 796.67,
+    shortSellAmount: 69.3,
+    marketValueCpr: 2.23,
+    marginTradingAmount: 865.98,
+    marginTradingCpr: 8.07,
+  },
+  {
+    id: '5d4e184d-7b70-4d72-a351-9f932aa6df73',
+    datetime: '2023-06-16',
+    marginTradingBalance: 16036.02,
+    financingBalance: 15072.81,
+    securityLoanBalance: 963.2,
+    maringBuyAmount: 801.21,
+    shortSellAmount: 71.59,
+    marketValueCpr: 2.21,
+    marginTradingAmount: 872.8,
+    marginTradingCpr: 8.17,
+  },
+  {
+    id: 'a27a2497-90a4-43c2-a8af-70001dd26004',
+    datetime: '2023-06-19',
+    marginTradingBalance: 16103.45,
+    financingBalance: 15134.85,
+    securityLoanBalance: 968.61,
+    maringBuyAmount: 864.56,
+    shortSellAmount: 68.48,
+    marketValueCpr: 2.23,
+    marginTradingAmount: 933.04,
+    marginTradingCpr: 8.42,
+  },
+  {
+    id: 'dc8812ff-dbf7-46f9-a31e-a023ad0c619d',
+    datetime: '2023-06-20',
+    marginTradingBalance: 16139.88,
+    financingBalance: 15164.78,
+    securityLoanBalance: 975.1,
+    maringBuyAmount: 844.49,
+    shortSellAmount: 67.77,
+    marketValueCpr: 2.24,
+    marginTradingAmount: 912.26,
+    marginTradingCpr: 8.36,
+  },
+  {
+    id: 'a8cbd78f-834e-44b7-aa5f-5b463ed09289',
+    datetime: '2023-06-21',
+    marginTradingBalance: 16015.74,
+    financingBalance: 15073.57,
+    securityLoanBalance: 942.17,
+    maringBuyAmount: 717.25,
+    shortSellAmount: 64.16,
+    marketValueCpr: 2.26,
+    marginTradingAmount: 781.41,
+    marginTradingCpr: 7.63,
+  },
+  {
+    id: '8aa42b6c-1189-4a63-8996-3bf9580489ce',
+    datetime: '2023-06-26',
+    marginTradingBalance: 15963.55,
+    financingBalance: 15055.14,
+    securityLoanBalance: 908.4,
+    maringBuyAmount: 654.09,
+    shortSellAmount: 60.65,
+    marketValueCpr: 2.29,
+    marginTradingAmount: 714.74,
+    marginTradingCpr: 7.3,
+  },
+  {
+    id: '616502d0-cbee-4e5a-9110-ca6aebfa174a',
+    datetime: '2023-06-27',
+    marginTradingBalance: 15957.45,
+    financingBalance: 15047.18,
+    securityLoanBalance: 910.27,
+    maringBuyAmount: 541.34,
+    shortSellAmount: 52.23,
+    marketValueCpr: 2.26,
+    marginTradingAmount: 593.57,
+    marginTradingCpr: 7.05,
+  },
+  {
+    id: '82a2f03a-a48f-480c-aca0-9092b33aa93e',
+    datetime: '2023-06-28',
+    marginTradingBalance: 15907.14,
+    financingBalance: 15001.99,
+    securityLoanBalance: 905.15,
+    maringBuyAmount: 583.59,
+    shortSellAmount: 60.39,
+    marketValueCpr: 2.25,
+    marginTradingAmount: 643.99,
+    marginTradingCpr: 7.24,
+  },
+  {
+    id: 'dec013f0-143d-4229-87b3-23c59709ce61',
+    datetime: '2023-06-29',
+    marginTradingBalance: 15925.08,
+    financingBalance: 15010.44,
+    securityLoanBalance: 914.64,
+    maringBuyAmount: 589.12,
+    shortSellAmount: 57.88,
+    marketValueCpr: 2.26,
+    marginTradingAmount: 647,
+    marginTradingCpr: 7.47,
+  },
+  {
+    id: '39b1838a-b5a1-4bdf-a5b8-6a13e916543b',
+    datetime: '2023-06-30',
+    marginTradingBalance: 15885.01,
+    financingBalance: 14954.96,
+    securityLoanBalance: 930.05,
+    maringBuyAmount: 627.68,
+    shortSellAmount: 60.87,
+    marketValueCpr: 2.23,
+    marginTradingAmount: 688.54,
+    marginTradingCpr: 7.48,
+  },
+  {
+    id: '68e91181-c09d-4a6a-89ee-697067626f60',
+    datetime: '2023-07-03',
+    marginTradingBalance: 15918.03,
+    financingBalance: 14984.68,
+    securityLoanBalance: 933.35,
+    maringBuyAmount: 728.82,
+    shortSellAmount: 58.94,
+    marketValueCpr: 2.21,
+    marginTradingAmount: 787.76,
+    marginTradingCpr: 7.68,
+  },
+  {
+    id: 'd8df11ae-7dea-4883-bb33-3f032989d967',
+    datetime: '2023-07-04',
+    marginTradingBalance: 15954.6,
+    financingBalance: 15007.91,
+    securityLoanBalance: 946.68,
+    maringBuyAmount: 668.08,
+    shortSellAmount: 62.37,
+    marketValueCpr: 2.21,
+    marginTradingAmount: 730.45,
+    marginTradingCpr: 7.85,
+  },
+  {
+    id: 'cd82df3d-cee1-4175-8227-d62fdbc8e322',
+    datetime: '2023-07-05',
+    marginTradingBalance: 15965.31,
+    financingBalance: 15017.25,
+    securityLoanBalance: 948.05,
+    maringBuyAmount: 608.71,
+    shortSellAmount: 58.78,
+    marketValueCpr: 2.23,
+    marginTradingAmount: 667.49,
+    marginTradingCpr: 7.67,
+  },
+  {
+    id: 'd21d3b10-3675-4921-acd7-1ed1c00293d4',
+    datetime: '2023-07-06',
+    marginTradingBalance: 15976.32,
+    financingBalance: 15025.46,
+    securityLoanBalance: 950.86,
+    maringBuyAmount: 582.5,
+    shortSellAmount: 51.81,
+    marketValueCpr: 2.24,
+    marginTradingAmount: 634.31,
+    marginTradingCpr: 7.72,
+  },
+  {
+    id: 'e3f16b1d-95e9-4a01-9c8c-7401bb9080bc',
+    datetime: '2023-07-07',
+    marginTradingBalance: 15926.18,
+    financingBalance: 14983.33,
+    securityLoanBalance: 942.85,
+    maringBuyAmount: 531.16,
+    shortSellAmount: 50.68,
+    marketValueCpr: 2.24,
+    marginTradingAmount: 581.84,
+    marginTradingCpr: 7.26,
+  },
+  {
+    id: '790f1a1c-f908-47e0-832d-f4c4b0a5671c',
+    datetime: '2023-07-10',
+    marginTradingBalance: 15930.92,
+    financingBalance: 14989.98,
+    securityLoanBalance: 940.94,
+    maringBuyAmount: 503.92,
+    shortSellAmount: 48.11,
+    marketValueCpr: 2.24,
+    marginTradingAmount: 552.03,
+    marginTradingCpr: 7.24,
+  },
+  {
+    id: '88846b3b-4690-4d74-bbe2-172c98170a46',
+    datetime: '2023-07-11',
+    marginTradingBalance: 15938.01,
+    financingBalance: 14993.48,
+    securityLoanBalance: 944.52,
+    maringBuyAmount: 533.79,
+    shortSellAmount: 53.25,
+    marketValueCpr: 2.22,
+    marginTradingAmount: 587.04,
+    marginTradingCpr: 7.58,
+  },
+  {
+    id: '456d88f5-7229-4ea4-802c-f1e005d43e50',
+    datetime: '2023-07-12',
+    marginTradingBalance: 15897.71,
+    financingBalance: 14965.31,
+    securityLoanBalance: 932.4,
+    maringBuyAmount: 624.42,
+    shortSellAmount: 57.87,
+    marketValueCpr: 2.24,
+    marginTradingAmount: 682.28,
+    marginTradingCpr: 7.47,
+  },
+  {
+    id: 'e77788e8-7d0b-48c4-bce7-ad731c61b693',
+    datetime: '2023-07-13',
+    marginTradingBalance: 15890.5,
+    financingBalance: 14947.93,
+    securityLoanBalance: 942.56,
+    maringBuyAmount: 633.91,
+    shortSellAmount: 61.26,
+    marketValueCpr: 2.21,
+    marginTradingAmount: 695.17,
+    marginTradingCpr: 7.54,
   },
 ];
