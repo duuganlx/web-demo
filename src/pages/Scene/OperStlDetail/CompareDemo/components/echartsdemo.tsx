@@ -13,7 +13,7 @@ const EChartsDemoView: React.FC<EChartsDemoViewProps> = (props) => {
   const echartRef = React.useRef<ReactECharts>(null);
 
   useEffect(() => {
-    console.log('ECharts');
+    // console.log('ECharts');
     if (echartRef.current) {
       const ech = echartRef.current.getEchartsInstance();
 
