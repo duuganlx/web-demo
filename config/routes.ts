@@ -39,6 +39,12 @@ export default [
         component: './Scene/OperStlDetail',
         hideInBreadcrumb: true,
       },
+      {
+        name: '数据集市',
+        path: '/scene/datamarket',
+        component: './Scene/DataMarket',
+        hideInBreadcrumb: true,
+      },
     ],
   },
   {
