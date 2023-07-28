@@ -29,6 +29,51 @@ export default [
     component: './Welcome',
   },
   {
+    path: '/eam',
+    name: 'EAM',
+    icon: 'DeploymentUnitOutlined',
+    routes: [
+      {
+        name: '数据资讯',
+        path: '/eam/datainfo',
+        routes: [
+          {
+            path: 'eam/datainfo/infowatch',
+            name: '实时资讯',
+            component: './eam/datainfo/infoWatch',
+          },
+          {
+            path: '/eam/datainfo/datamarket',
+            name: '数据集市',
+            component: './eam/datainfo/dataMarket',
+          },
+        ],
+      },
+      {
+        name: '运营管理',
+        path: '/eam/operation',
+        routes: [
+          {
+            path: '/eam/operation/settlementDetails',
+            name: '结算明细报表',
+            component: './eam/operation/settlementDetails',
+          },
+        ],
+      },
+      {
+        name: '量化投研',
+        path: '/eam/investmentquant',
+        routes: [
+          {
+            path: '/eam/investmentquant/analystCoverage',
+            name: '分析师行业覆盖',
+            component: './eam/investmentquant/analystCoverage',
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: '/scene',
     name: '场景样例',
     icon: 'StarOutlined',

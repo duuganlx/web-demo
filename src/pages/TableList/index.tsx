@@ -241,6 +241,12 @@ const TableList: React.FC = () => {
     },
   ];
 
+  console.log('--1');
+
+  rule({ current: 1, pageSize: 10 }).then((res) => {
+    console.log(res);
+  });
+
   return (
     <PageContainer>
       <ProTable<API.RuleListItem, API.PageParams>

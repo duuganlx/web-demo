@@ -33,6 +33,7 @@ const genList = (current: number, pageSize: number) => {
 let tableListDataSource = genList(1, 100);
 
 function getRule(req: Request, res: Response, u: string) {
+  console.log('--2');
   let realUrl = u;
   if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
     realUrl = req.url;
@@ -170,7 +171,7 @@ function postRule(req: Request, res: Response, u: string, b: Request) {
   res.json(result);
 }
 
-export default {
-  'GET /api/rule': getRule,
-  'POST /api/rule': postRule,
-};
+// export default {
+//   'GET /api/rule': getRule,
+//   'POST /api/rule': postRule,
+// };
