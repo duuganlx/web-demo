@@ -32,10 +32,12 @@ export default [
     path: '/eam',
     name: 'EAM',
     icon: 'DeploymentUnitOutlined',
+    hideInBreadcrumb: true,
     routes: [
       {
         name: '数据资讯',
         path: '/eam/datainfo',
+        hideInBreadcrumb: true,
         routes: [
           {
             path: 'eam/datainfo/infowatch',
@@ -46,6 +48,12 @@ export default [
             path: '/eam/datainfo/datamarket',
             name: '数据集市',
             component: './eam/datainfo/dataMarket',
+          },
+          {
+            path: '/eam/datainfo/cardmarket',
+            name: '卡片集市',
+            component: './eam/datainfo/cardMarket',
+            hideInBreadcrumb: true,
           },
         ],
       },
