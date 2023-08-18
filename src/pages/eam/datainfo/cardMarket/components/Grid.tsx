@@ -1,4 +1,4 @@
-const Grid: React.FC = () => {
+const GridView: React.FC = () => {
   return (
     <svg
       width="100%"
@@ -39,4 +39,4 @@ const Grid: React.FC = () => {
   );
 };
 
-export default Grid;
+export default GridView;
