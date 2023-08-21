@@ -2,11 +2,15 @@ import { cloneDeep } from 'lodash';
 import { useCallback, useState } from 'react';
 
 export default function () {
-  // const [curComponent, setCurComponent] = useState<any>(undefined);
+  const [curComponent, setCurComponent] = useState<any>(null);
   const [realtimeList, setRealtimeList] = useState<any[]>([]);
 
   const upRealtimeList = useCallback((data: any[]) => {
     setRealtimeList(data);
+  }, []);
+
+  const upCurComponent = useCallback((data: any) => {
+    setCurComponent(data);
   }, []);
 
   const updateCurComponent = useCallback(
@@ -29,10 +33,10 @@ export default function () {
   );
 
   return {
-    // curComponent,
+    curComponent,
     realtimeList,
     upRealtimeList,
-    // upCurComponent,
+    upCurComponent,
     updateCurComponent,
   };
 }

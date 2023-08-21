@@ -1,34 +1,39 @@
 import { ControlOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { nanoid } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { FloatButton } from 'antd';
+import { FloatButton, Modal } from 'antd';
 import { cloneDeep } from 'lodash';
-import { useRef } from 'react';
-import TextView from '../template/Text';
+import { useRef, useState } from 'react';
 import GridView from './Grid';
 import Shape from './Shape';
-import DragComList, { DRAG_COM_LIST } from './dragComList';
+import DragComList from './dragComList';
+import { PROTO_CARD_COMPONENT, PROTO_CARD_LIST } from './protoCards/protoCard';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface EditorModeViewProps {}
 
 const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
   console.log(props);
+
+  const [isEditContentConfig, setIsEditContentConfig] = useState<boolean>(false);
+
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const { realtimeList, setRealtimeList } = useModel('eam.datainfo.cardMarket.model', (model) => ({
-    realtimeList: model.realtimeList,
-    setRealtimeList: model.upRealtimeList,
-  }));
+  const { curComponent, realtimeList, setRealtimeList, setCurComponent } = useModel(
+    'eam.datainfo.cardMarket.model',
+    (model) => ({
+      curComponent: model.curComponent,
+      realtimeList: model.realtimeList,
+      setRealtimeList: model.upRealtimeList,
+      setCurComponent: model.upCurComponent,
+    }),
+  );
 
   return (
     <>
       <div
         ref={editorRef}
         style={{ width: '100%', height: '60vh', backgroundColor: '#fff' }}
-        // onMouseDown={(e) => {
-        //   console.log(e);
-        // }}
         onDragOver={(e) => {
           // 处理鼠标拖拽移入
           e.preventDefault();
@@ -42,7 +47,7 @@ const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
 
           if (comType && rectInfo) {
             const component: any =
-              cloneDeep(DRAG_COM_LIST.find((item) => item.type === comType)) || {};
+              cloneDeep(PROTO_CARD_LIST.find((item) => item.type === comType)) || {};
             component.id = nanoid();
             component.style.top = e.clientY - rectInfo.y;
             component.style.left = e.clientX - rectInfo.x;
@@ -50,9 +55,14 @@ const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
             setRealtimeList([...realtimeList, component]);
           }
         }}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          setCurComponent(null);
+        }}
       >
         <GridView />
         {realtimeList.map((item, index) => {
+          const Com = PROTO_CARD_COMPONENT[item.type];
           return (
             <Shape
               key={item.id}
@@ -61,7 +71,7 @@ const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
               editorClient={editorRef.current?.getBoundingClientRect()}
               isEditState={true}
             >
-              <TextView key={item.id} style={{ ...item.style }} />
+              <Com {...item} />
             </Shape>
           );
         })}
@@ -78,17 +88,47 @@ const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
       >
         <DragComList />
       </div>
-      <>
-        <FloatButton.Group
-          trigger="hover"
-          type="primary"
-          style={{ right: 94 }}
-          icon={<ControlOutlined />}
-        >
-          <FloatButton icon={<EditOutlined />} tooltip="内容编辑" />
-          <FloatButton icon={<DeleteOutlined />} tooltip="删除" />
-        </FloatButton.Group>
-      </>
+
+      {curComponent && (
+        <>
+          <FloatButton.Group
+            trigger="hover"
+            type="primary"
+            style={{ right: 94 }}
+            icon={<ControlOutlined />}
+          >
+            <FloatButton
+              icon={<EditOutlined />}
+              tooltip="内容编辑"
+              onClick={() => {
+                setIsEditContentConfig(true);
+              }}
+            />
+            <FloatButton
+              icon={<DeleteOutlined />}
+              tooltip="删除"
+              onClick={() => {
+                const newRealtimeList = realtimeList.filter((item) => item.id !== curComponent.id);
+                setRealtimeList(newRealtimeList);
+              }}
+            />
+          </FloatButton.Group>
+        </>
+      )}
+
+      <Modal
+        title="内容编辑"
+        open={isEditContentConfig}
+        destroyOnClose
+        onOk={() => {
+          setIsEditContentConfig(false);
+        }}
+        onCancel={() => {
+          setIsEditContentConfig(false);
+        }}
+      >
+        ss
+      </Modal>
     </>
   );
 };

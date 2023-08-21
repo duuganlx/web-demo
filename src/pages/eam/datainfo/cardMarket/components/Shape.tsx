@@ -83,9 +83,14 @@ const Shape: React.FC<ShapeProps> = (props) => {
 
   // const active = false;
 
-  const { updateCurComponent } = useModel('eam.datainfo.cardMarket.model', (model) => ({
-    updateCurComponent: model.updateCurComponent,
-  }));
+  const { curComponent, updateCurComponent, setCurComponent } = useModel(
+    'eam.datainfo.cardMarket.model',
+    (model) => ({
+      curComponent: model.curComponent,
+      updateCurComponent: model.updateCurComponent,
+      setCurComponent: model.upCurComponent,
+    }),
+  );
 
   const className = useEmotionCss(() => {
     return {
@@ -114,9 +119,9 @@ const Shape: React.FC<ShapeProps> = (props) => {
 
   const handleMouseDownOnShape = (e: any) => {
     e.stopPropagation();
+    setCurComponent(element);
 
     const _style = { ...style };
-    console.log(_style);
     // 鼠标按下时的位置
     const startPos = {
       x: e.clientX,
@@ -152,6 +157,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
     document.addEventListener('mouseup', up);
   };
 
+  // 拖动缩放图纸的点
   const handleMouseDownOnPoint = (point: string, e: any) => {
     e.stopPropagation();
     e.preventDefault();
@@ -202,7 +208,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
         handleMouseDownOnShape(e);
       }}
     >
-      {isEditState
+      {isEditState && curComponent?.id === element.id
         ? DIRECTION_POINTS.map((item) => (
             <div
               key={item}

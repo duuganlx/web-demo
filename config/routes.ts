@@ -89,13 +89,19 @@ export default [
       {
         name: '绘图',
         path: '/scene/operstldetail',
-        component: './Scene/OperStlDetail',
+        component: './scene/OperStlDetail',
         hideInBreadcrumb: true,
       },
       {
         name: '数据集市',
         path: '/scene/datamarket',
-        component: './Scene/DataMarket',
+        component: './scene/DataMarket',
+        hideInBreadcrumb: true,
+      },
+      {
+        name: 'some',
+        path: '/scene/some',
+        component: './scene/reactdndDemo',
         hideInBreadcrumb: true,
       },
     ],

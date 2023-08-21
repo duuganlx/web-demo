@@ -1,7 +1,7 @@
 import { useModel } from '@umijs/max';
 import { useRef } from 'react';
-import TextView from '../template/Text';
 import Shape from './Shape';
+import TextView from './protoCards/text';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ShowModeViewProps {}
