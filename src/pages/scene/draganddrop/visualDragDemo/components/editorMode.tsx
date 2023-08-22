@@ -20,7 +20,7 @@ const EditorModeView: React.FC<EditorModeViewProps> = (props) => {
   const editorRef = useRef<HTMLDivElement>(null);
 
   const { curComponent, realtimeList, setRealtimeList, setCurComponent } = useModel(
-    'eam.datainfo.cardMarket.model',
+    'scene.draganddrop.visualDragDemo.model',
     (model) => ({
       curComponent: model.curComponent,
       realtimeList: model.realtimeList,

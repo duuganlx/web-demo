@@ -99,10 +99,21 @@ export default [
         hideInBreadcrumb: true,
       },
       {
-        name: 'some',
-        path: '/scene/some',
-        component: './scene/reactdndDemo',
+        name: '拖拽',
+        path: '/scene/draganddrop',
         hideInBreadcrumb: true,
+        routes: [
+          {
+            path: '/scene/draganddrop/reactdnd',
+            name: 'react DnD',
+            component: './scene/draganddrop/reactdndDemo',
+          },
+          {
+            path: '/scene/draganddrop/visualdrag',
+            name: 'visual drag demo',
+            component: './scene/draganddrop/visualDragDemo',
+          },
+        ],
       },
     ],
   },

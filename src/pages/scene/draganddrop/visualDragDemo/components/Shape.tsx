@@ -84,7 +84,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
   // const active = false;
 
   const { curComponent, updateCurComponent, setCurComponent } = useModel(
-    'eam.datainfo.cardMarket.model',
+    'scene.draganddrop.visualDragDemo.model',
     (model) => ({
       curComponent: model.curComponent,
       updateCurComponent: model.updateCurComponent,

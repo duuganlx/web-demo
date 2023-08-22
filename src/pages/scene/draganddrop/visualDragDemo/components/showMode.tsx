@@ -9,7 +9,7 @@ interface ShowModeViewProps {}
 const ShowModeView: React.FC<ShowModeViewProps> = (props) => {
   console.log(props);
 
-  const { realtimeList } = useModel('eam.datainfo.cardMarket.model', (model) => ({
+  const { realtimeList } = useModel('scene.draganddrop.visualDragDemo.model', (model) => ({
     realtimeList: model.realtimeList,
   }));
 
