@@ -1,77 +1,18 @@
+import { DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useModel } from '@umijs/max';
+import { Button, Space } from 'antd';
+import { DIRECTION_POINTS, calculatePointPosition, getDirectionPointStyle } from '../common';
+import { CardConfig } from './protoCard';
 
-const DIRECTION_POINTS = ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l']; // 八个方向
-
-// 鼠标样式
-const CURSORS: Record<string, string> = {
-  lt: 'nw-resize',
-  t: 'n-resize',
-  rt: 'ne-resize',
-  r: 'e-resize',
-  rb: 'se-resize',
-  b: 's-resize',
-  lb: 'sw-resize',
-  l: 'w-resize',
-};
-
-// 左上缩放
-function calculateLeftTop(style: any, curPositon: any) {
-  const { width, height, top, left } = style;
-  //   鼠标的实时位置不能超出容器
-  const curX = Math.max(0, curPositon.x);
-  const curY = Math.max(0, curPositon.y);
-  const offsetX = left - curX;
-  const offsetY = top - curY;
-  style.width = width + offsetX;
-  style.height = height + offsetY;
-  style.top = curY;
-  style.left = curX;
-}
-
-// 右上缩放
-// function calculateRightTop(style: any, curPosition: any) {
-//   const { height, top, left } = style;
-//   //   鼠标的实时位置不能超出容器
-//   const curX = Math.max(0, curPositon.x);
-//   const curY = Math.max(0, curPositon.y);
-//   const offsetX = curX - left;
-// }
-
-/**
- * @description: 获取八个方向点的样式
- * @param {*} point：方向点
- * @param {*} style：组件样式
- */
-export const getDirectionPointStyle = (point: any, width: number, height: number) => {
-  const halfWidth = width / 2;
-  const halfHeight = height / 2;
-
-  const positionMap: Record<string, any[]> = {
-    lt: [0, 0],
-    rt: [width, 0],
-    lb: [0, height],
-    rb: [width, height],
-    t: [halfWidth, 0],
-    b: [halfWidth, height],
-    l: [0, Math.floor(halfHeight)],
-    r: [width, Math.floor(halfHeight)],
-  };
-
-  const position = positionMap[point];
-
-  return {
-    marginLeft: '-4px',
-    marginTop: '-4px',
-    left: `${position[0]}px`,
-    top: `${position[1]}px`,
-    cursor: CURSORS[point],
-  };
+export type ShapeConfig = {
+  id: string;
+  canvasHeight: number; // 画布高度
+  canvasWidth: number; // 画布宽度
 };
 
 interface ShapeProps {
-  element: any;
-  style: Record<string, any>;
+  element: CardConfig;
   children: React.ReactNode;
   editorClient: any;
 
@@ -79,18 +20,17 @@ interface ShapeProps {
 }
 
 const Shape: React.FC<ShapeProps> = (props) => {
-  const { children, element, style, editorClient, isEditState } = props;
+  const { children, element, editorClient, isEditState } = props;
+  const { style, canvasStyle } = element;
 
-  // const active = false;
-
-  const { curComponent, updateCurComponent, setCurComponent } = useModel(
-    'scene.draganddrop.visualDragDemo.model',
-    (model) => ({
+  const { curComponent, realtimeList, setRealtimeList, updateCurComponent, setCurComponent } =
+    useModel('scene.draganddrop.visualDragDemo.model', (model) => ({
       curComponent: model.curComponent,
+      realtimeList: model.realtimeList,
+      setRealtimeList: model.upRealtimeList,
       updateCurComponent: model.updateCurComponent,
       setCurComponent: model.upCurComponent,
-    }),
-  );
+    }));
 
   const className = useEmotionCss(() => {
     return {
@@ -117,6 +57,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
     };
   });
 
+  // 鼠标移动
   const handleMouseDownOnShape = (e: any) => {
     e.stopPropagation();
     setCurComponent(element);
@@ -162,8 +103,6 @@ const Shape: React.FC<ShapeProps> = (props) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const _style = { ...style };
-
     // 获取画布位移信息
     const move = (moveEvent: any) => {
       // 实时鼠标位置
@@ -172,20 +111,9 @@ const Shape: React.FC<ShapeProps> = (props) => {
         y: moveEvent.clientY - Math.round(editorClient.top),
       };
 
-      console.log(curPositon);
-      console.log(point);
-
-      switch (point) {
-        case 'lt':
-          calculateLeftTop(_style, curPositon);
-          break;
-        default:
-          console.log('todo ', point);
-      }
-
-      console.log(_style);
+      const newStyle = calculatePointPosition(point, style, curPositon, canvasStyle!);
       // 修改当前组件样式
-      updateCurComponent(element, _style);
+      updateCurComponent(element, newStyle);
     };
 
     const up = () => {
@@ -208,8 +136,9 @@ const Shape: React.FC<ShapeProps> = (props) => {
         handleMouseDownOnShape(e);
       }}
     >
-      {isEditState && curComponent?.id === element.id
-        ? DIRECTION_POINTS.map((item) => (
+      {isEditState && curComponent?.id === element.id ? (
+        <>
+          {DIRECTION_POINTS.map((item) => (
             <div
               key={item}
               className="shape-point"
@@ -221,8 +150,40 @@ const Shape: React.FC<ShapeProps> = (props) => {
                 handleMouseDownOnPoint(item, e);
               }}
             />
-          ))
-        : null}
+          ))}
+          <div style={{ position: 'absolute', bottom: '-35px', right: '10px' }}>
+            <Space>
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<DeleteOutlined />}
+                onClick={() => {
+                  const newRealtimeList = realtimeList.filter(
+                    (item) => item.id !== curComponent.id,
+                  );
+                  setRealtimeList(newRealtimeList);
+                }}
+              />
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  console.log('+1');
+                }}
+              />
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<MinusOutlined />}
+                onClick={() => {
+                  console.log('-1');
+                }}
+              />
+            </Space>
+          </div>
+        </>
+      ) : null}
       {children}
     </div>
   );

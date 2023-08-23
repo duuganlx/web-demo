@@ -1,5 +1,5 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { PROTO_CARD_LIST } from './protoCards/protoCard';
+import { PROTO_CARD_LIST } from './protoCard';
 
 const DragComList: React.FC = () => {
   const className = useEmotionCss(() => {

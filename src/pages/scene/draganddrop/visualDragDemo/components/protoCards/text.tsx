@@ -1,16 +1,17 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { Input, Modal } from 'antd';
 import { useRef, useState } from 'react';
+import { TextCardConfig } from '../protoCard';
 
-interface TextProps {
-  style?: any;
-  name?: string;
-}
-const TextView: React.FC<TextProps> = (props) => {
-  const { style, name } = props;
+const { TextArea } = Input;
+
+const TextView: React.FC<TextCardConfig> = (props) => {
+  const { style } = props;
 
   const textRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState<string>('双击编辑文字');
-  const [canEdit, setCanEdit] = useState<boolean>(false);
+  const [contentEditMode, setContentEditMode] = useState<boolean>(false);
+  // const [canEdit, setCanEdit] = useState<boolean>(false);
 
   const className = useEmotionCss(() => {
     return {
@@ -25,20 +26,38 @@ const TextView: React.FC<TextProps> = (props) => {
   });
 
   return (
-    <div className={className} style={style} title={name}>
+    <div
+      className={className}
+      style={style}
+      onDoubleClick={() => {
+        // setCanEdit(true);
+        setContentEditMode(true);
+      }}
+    >
       <div
         ref={textRef}
-        contentEditable={canEdit}
+        // contentEditable={canEdit}
         dangerouslySetInnerHTML={{ __html: text }}
-        onDoubleClick={() => {
-          setCanEdit(true);
-        }}
-        onBlur={() => {
-          setText(textRef.current?.innerText || '');
-          setCanEdit(false);
-          // todo 更新到model中
-        }}
+        // onBlur 事件发生在对象失去焦点时
+        // onBlur={() => {
+        //   setText(textRef.current?.innerText || '');
+        //   // setCanEdit(false);
+        //   // todo 更新到model中
+        // }}
       />
+      <Modal
+        open={contentEditMode}
+        onCancel={() => setContentEditMode(false)}
+        onOk={() => setContentEditMode(false)}
+      >
+        <TextArea
+          rows={4}
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+          }}
+        />
+      </Modal>
     </div>
   );
 };

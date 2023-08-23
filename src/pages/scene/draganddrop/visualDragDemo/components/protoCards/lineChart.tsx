@@ -1,14 +1,7 @@
 import ReactECharts, { EChartsOption } from 'echarts-for-react';
+import { LineChartCardConfig } from '../protoCard';
 
-interface LineChartComProps {
-  style: { width: number; height: number };
-  // 以下都是echarts的配置项
-  xAxis: any;
-  yAxis: any;
-  series: any;
-}
-
-const LineChartCom: React.FC<LineChartComProps> = (props) => {
+const LineChartCom: React.FC<LineChartCardConfig> = (props) => {
   const { style, xAxis, yAxis, series } = props;
 
   const echartsOptions: EChartsOption = {
