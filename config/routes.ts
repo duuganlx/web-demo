@@ -113,6 +113,11 @@ export default [
             name: 'visual drag demo',
             component: './scene/draganddrop/visualDragDemo',
           },
+          {
+            path: '/scene/draganddrop/appeditorreactdndts',
+            name: 'app editor react dnd ts',
+            component: './scene/draganddrop/appEditorReactDndDemo',
+          },
         ],
       },
     ],
