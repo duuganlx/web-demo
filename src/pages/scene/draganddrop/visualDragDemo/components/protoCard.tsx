@@ -15,7 +15,6 @@ export interface CardConfig {
   label: string;
   type: number;
   style: StyleConfig;
-  canvasStyle?: Pick<StyleConfig, 'height' | 'width'>;
 }
 
 export interface TextCardConfig extends CardConfig {

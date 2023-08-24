@@ -1,7 +1,7 @@
 import { useModel } from '@umijs/max';
 import { useRef } from 'react';
 import Shape from './Shape';
-import TextView from './protoCards/text';
+import { displayComponent } from './protoCard';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ShowModeViewProps {}
@@ -17,17 +17,16 @@ const ShowModeView: React.FC<ShowModeViewProps> = (props) => {
 
   return (
     <>
-      <div style={{ width: '100%', height: '60vh', backgroundColor: '#fff' }}>
-        {realtimeList.map((item, index) => {
+      <div style={{ width: '95vw', height: '80vh', backgroundColor: '#fff' }}>
+        {realtimeList.map((item) => {
           return (
             <Shape
               key={item.id}
               element={item}
-              style={{ ...item.style, zIndex: realtimeList.length - index }}
               editorClient={editorRef.current?.getBoundingClientRect()}
               isEditState={false}
             >
-              <TextView key={item.id} style={{ ...item.style }} />
+              {displayComponent(item)}
             </Shape>
           );
         })}

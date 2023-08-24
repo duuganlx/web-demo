@@ -24,6 +24,7 @@ const EditorModeView: React.FC<EditorModeViewProps> = () => {
     }),
   );
 
+  // 初次设定画布大小
   useEffect(() => {
     if (!editorRef.current) return;
     setCanvasStyle({
@@ -32,11 +33,21 @@ const EditorModeView: React.FC<EditorModeViewProps> = () => {
     });
   }, [editorRef]);
 
+  // 监听画布大小变化
+  window.addEventListener('resize', () => {
+    if (!editorRef.current) return;
+
+    setCanvasStyle({
+      height: editorRef.current.clientHeight,
+      width: editorRef.current.clientWidth,
+    });
+  });
+
   return (
     <>
       <div
         ref={editorRef}
-        style={{ width: '100%', height: '60vh', backgroundColor: '#fff' }}
+        style={{ width: '95vw', height: '80vh', backgroundColor: '#fff' }}
         onDragOver={(e) => {
           // 处理鼠标拖拽移入
           e.preventDefault();
@@ -60,13 +71,6 @@ const EditorModeView: React.FC<EditorModeViewProps> = () => {
             component.style.top = e.clientY - rectInfo.y;
             component.style.left = e.clientX - rectInfo.x;
             component.style.zIndex = realtimeList.length + 1;
-
-            if (editorRef.current) {
-              component.canvasStyle = {
-                height: editorRef.current.clientHeight,
-                width: editorRef.current.clientWidth,
-              };
-            }
 
             setRealtimeList([...realtimeList, component]);
           }

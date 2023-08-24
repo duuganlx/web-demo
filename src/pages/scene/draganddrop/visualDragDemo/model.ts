@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { useCallback, useState } from 'react';
-import { CardConfig } from './components/protoCard';
+import { CardConfig, StyleConfig } from './components/protoCard';
 
 type canvasStyleItem = {
   height: number;
@@ -8,7 +8,7 @@ type canvasStyleItem = {
 };
 
 export default function () {
-  const [curComponent, setCurComponent] = useState<any>(null);
+  const [curComponent, setCurComponent] = useState<CardConfig | null>(null);
   const [realtimeList, setRealtimeList] = useState<CardConfig[]>([]);
   const [canvasStyle, setCanvasStyle] = useState<canvasStyleItem>({ height: 0, width: 0 }); // 画布样式
 
@@ -25,18 +25,18 @@ export default function () {
   }, []);
 
   const updateCurComponent = useCallback(
-    (comp: any, payload: any) => {
-      const { top, left, width, height, rotate } = payload;
+    (comp: CardConfig, payload: StyleConfig) => {
+      const { top, left, width, height, zIndex } = payload;
       const tmpCurComponent = cloneDeep(comp);
       const tmpRealtimeList = cloneDeep(realtimeList);
 
-      if (top) tmpCurComponent.style.top = Math.round(top);
-      if (left) tmpCurComponent.style.left = Math.round(left);
       if (width) tmpCurComponent.style.width = Math.round(width);
       if (height) tmpCurComponent.style.height = Math.round(height);
-      if (rotate) tmpCurComponent.style.rotate = Math.round(rotate);
-      const _index = realtimeList.findIndex((item) => item.id === tmpCurComponent.id);
-      realtimeList.splice(_index, 1, tmpCurComponent);
+      if (top !== undefined) tmpCurComponent.style.top = Math.round(top);
+      if (left !== undefined) tmpCurComponent.style.left = Math.round(left);
+      if (zIndex !== undefined) tmpCurComponent.style.zIndex = Math.round(zIndex);
+      const _index = tmpRealtimeList.findIndex((item) => item.id === tmpCurComponent.id);
+      tmpRealtimeList.splice(_index, 1, tmpCurComponent);
 
       setRealtimeList(tmpRealtimeList);
     },

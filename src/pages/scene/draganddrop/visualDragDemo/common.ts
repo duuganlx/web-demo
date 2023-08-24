@@ -40,167 +40,145 @@ export const getDirectionPointStyle = (point: string, width: number, height: num
 };
 
 // 左上缩放
-function calculateLeftTop(style: StyleConfig, curPosition: { x: number; y: number }) {
-  const { width, height, top = 0, left = 0 } = style;
+function calculateLeftTop(_style: StyleConfig, curPosition: { x: number; y: number }) {
+  const { width, height, top = 0, left = 0 } = _style;
 
   const curX = Math.max(0, curPosition.x);
   const curY = Math.max(0, curPosition.y);
   const offsetX = left - curX;
   const offsetY = top - curY;
 
-  return { ...style, width: width + offsetX, height: height + offsetY, top: curY, left: curX };
+  _style.width = width + offsetX;
+  _style.height = height + offsetY;
+  _style.top = curY;
+  _style.left = curX;
 }
 
 // 右上缩放
 function calculateRightTop(
-  style: StyleConfig,
+  _style: StyleConfig,
   curPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
-  const { height, top, left } = style;
-  //   鼠标的实时位置不能超出容器
+  const { height, top, left = 0 } = _style;
+
   const curX = Math.max(0, Math.min(canvasStyle.width, curPosition.x));
   const curY = Math.max(0, curPosition.y);
-  const offsetX = curX - left!;
+  const offsetX = curX - left;
   const offsetY = top! - curY;
 
-  return {
-    ...style,
-    width: offsetX,
-    height: height + offsetY,
-    top: curY,
-  };
+  _style.width = offsetX;
+  _style.height = height + offsetY;
+  _style.top = curY;
 }
 
 // 右下缩放
 function calculateRightBottom(
-  style: StyleConfig,
+  _style: StyleConfig,
   curPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
-  const { top, left } = style;
-  //   鼠标的实时位置不能超出容器
+  const { top, left } = _style;
+
   const curX = Math.max(0, Math.min(canvasStyle.width, curPosition.x));
   const curY = Math.max(0, Math.min(canvasStyle.height, curPosition.y));
   const offsetX = curX - left!;
   const offsetY = curY - top!;
 
-  return {
-    ...style,
-    width: offsetX,
-    height: offsetY,
-  };
+  _style.width = offsetX;
+  _style.height = offsetY;
 }
 
 // 左下缩放
 function calculateLeftBottom(
-  style: StyleConfig,
+  _style: StyleConfig,
   curPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
-  const { width, top, left } = style;
-  //   鼠标的实时位置不能超出容器
+  const { width, top, left } = _style;
+
   const curX = Math.max(0, curPosition.x);
   const curY = Math.max(0, Math.min(canvasStyle.height, curPosition.y));
   const offsetX = left! - curX;
   const offsetY = curY - top!;
 
-  return {
-    ...style,
-    width: width + offsetX,
-    height: offsetY,
-    left: curX,
-  };
+  _style.width = width + offsetX;
+  _style.height = offsetY;
+  _style.left = curX;
 }
 
 // 上缩放
-function calculateTop(style: StyleConfig, curPosition: { x: number; y: number }) {
-  const { height, top = 0 } = style;
+function calculateTop(_style: StyleConfig, curPosition: { x: number; y: number }) {
+  const { height, top = 0 } = _style;
 
-  if (curPosition.y < 0) {
-    return style;
-  }
+  const curY = Math.max(0, curPosition.y);
+  const offsetY = top - curY;
 
-  const offsetY = top - curPosition.y;
-
-  return { ...style, height: height + offsetY, top: curPosition.y };
+  _style.height = height + offsetY;
+  _style.top = curY;
 }
 
 // 右缩放
 function calculateRight(
-  style: StyleConfig,
+  _style: StyleConfig,
   curPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
   const { width } = canvasStyle;
-  if (curPosition.x > width) {
-    return style;
-  }
+  if (curPosition.x > width) return;
 
-  const offsetX = curPosition.x - style.left!;
+  const offsetX = curPosition.x - _style.left!;
 
-  return {
-    ...style,
-    width: offsetX,
-  };
+  _style.width = offsetX;
 }
 
 // 下缩放
 function calculateBottom(
-  style: StyleConfig,
+  _style: StyleConfig,
   curPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
   const { height } = canvasStyle;
-  if (curPosition.y > height) {
-    return style;
-  }
+  if (curPosition.y > height) return;
 
-  return {
-    ...style,
-    height: curPosition.y - style.top!,
-  };
+  _style.height = curPosition.y - _style.top!;
 }
 
 // 左缩放
-function calculateLeft(style: StyleConfig, curPosition: { x: number; y: number }) {
-  const { width, left } = style;
-  if (curPosition.x < 0) {
-    return style;
-  }
+function calculateLeft(_style: StyleConfig, curPosition: { x: number; y: number }) {
+  const { width, left } = _style;
+
+  if (curPosition.x < 0) return;
+
   const offsetX = left! - curPosition.x;
 
-  return {
-    ...style,
-    width: width + offsetX,
-    left: curPosition.x,
-  };
+  _style.width = width + offsetX;
+  _style.left = curPosition.x;
 }
 
 export function calculatePointPosition(
   point: string,
-  style: StyleConfig,
+  _style: StyleConfig,
   cursorPosition: { x: number; y: number },
   canvasStyle: Pick<StyleConfig, 'height' | 'width'>,
 ) {
   switch (point) {
     case 'lt':
-      return calculateLeftTop(style, cursorPosition);
+      return calculateLeftTop(_style, cursorPosition);
     case 't':
-      return calculateTop(style, cursorPosition);
+      return calculateTop(_style, cursorPosition);
     case 'rt':
-      return calculateRightTop(style, cursorPosition, canvasStyle);
+      return calculateRightTop(_style, cursorPosition, canvasStyle);
     case 'r':
-      return calculateRight(style, cursorPosition, canvasStyle);
+      return calculateRight(_style, cursorPosition, canvasStyle);
     case 'rb':
-      return calculateRightBottom(style, cursorPosition, canvasStyle);
+      return calculateRightBottom(_style, cursorPosition, canvasStyle);
     case 'b':
-      return calculateBottom(style, cursorPosition, canvasStyle);
+      return calculateBottom(_style, cursorPosition, canvasStyle);
     case 'lb':
-      return calculateLeftBottom(style, cursorPosition, canvasStyle);
+      return calculateLeftBottom(_style, cursorPosition, canvasStyle);
     case 'l':
-      return calculateLeft(style, cursorPosition);
+      return calculateLeft(_style, cursorPosition);
     default:
-      return { ...style };
   }
 }

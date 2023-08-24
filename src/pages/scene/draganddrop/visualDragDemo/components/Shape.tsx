@@ -21,20 +21,28 @@ interface ShapeProps {
 
 const Shape: React.FC<ShapeProps> = (props) => {
   const { children, element, editorClient, isEditState } = props;
-  const { style, canvasStyle } = element;
+  const { style } = element;
 
-  const { curComponent, realtimeList, setRealtimeList, updateCurComponent, setCurComponent } =
-    useModel('scene.draganddrop.visualDragDemo.model', (model) => ({
-      curComponent: model.curComponent,
-      realtimeList: model.realtimeList,
-      setRealtimeList: model.upRealtimeList,
-      updateCurComponent: model.updateCurComponent,
-      setCurComponent: model.upCurComponent,
-    }));
+  const {
+    curComponent,
+    realtimeList,
+    canvasStyle,
+    setRealtimeList,
+    updateCurComponent,
+    setCurComponent,
+  } = useModel('scene.draganddrop.visualDragDemo.model', (model) => ({
+    curComponent: model.curComponent,
+    realtimeList: model.realtimeList,
+    canvasStyle: model.canvasStyle,
+    setRealtimeList: model.upRealtimeList,
+    updateCurComponent: model.updateCurComponent,
+    setCurComponent: model.upCurComponent,
+  }));
 
   const className = useEmotionCss(() => {
     return {
       position: 'absolute',
+      outline: '1px solid #d9d9d9',
 
       '.shape-point': {
         position: 'absolute',
@@ -82,8 +90,12 @@ const Shape: React.FC<ShapeProps> = (props) => {
       };
 
       // todo 需要判断是否超出边界
-      _style.left = offset.x + startStyle.left;
-      _style.top = offset.y + startStyle.top;
+      const { height: canvasHeight, width: canvasWidth } = canvasStyle;
+      const left = offset.x + startStyle.left;
+      const top = offset.y + startStyle.top;
+
+      _style.left = Math.max(0, Math.min(left, canvasWidth - _style.width));
+      _style.top = Math.max(0, Math.min(top, canvasHeight - _style.height));
 
       // 修改当前组件样式
       updateCurComponent(element, _style);
@@ -103,6 +115,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
     e.stopPropagation();
     e.preventDefault();
 
+    const _style = { ...style };
     // 获取画布位移信息
     const move = (moveEvent: any) => {
       // 实时鼠标位置
@@ -111,9 +124,11 @@ const Shape: React.FC<ShapeProps> = (props) => {
         y: moveEvent.clientY - Math.round(editorClient.top),
       };
 
-      const newStyle = calculatePointPosition(point, style, curPositon, canvasStyle!);
+      // 当画布缩放时，调用updateCurComponent更新之后，此处style仍然是鼠标按下时的style，
+      // 不是最新的style，导致边界的计算有问题。所以只能是对唯一变量修改，即修改入参_style
+      calculatePointPosition(point, _style, curPositon, canvasStyle);
       // 修改当前组件样式
-      updateCurComponent(element, newStyle);
+      updateCurComponent(element, _style);
     };
 
     const up = () => {
@@ -127,7 +142,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
 
   return (
     <div
-      className={className}
+      className={`${className} ${isEditState && curComponent?.id === element.id ? 'active' : ''}`}
       style={style}
       onMouseDown={(e) => {
         if (!isEditState) {
@@ -169,7 +184,10 @@ const Shape: React.FC<ShapeProps> = (props) => {
                 shape="circle"
                 icon={<PlusOutlined />}
                 onClick={() => {
-                  console.log('+1');
+                  updateCurComponent(element, {
+                    ...element.style,
+                    width: element.style.width + 10,
+                  });
                 }}
               />
               <Button
@@ -177,7 +195,10 @@ const Shape: React.FC<ShapeProps> = (props) => {
                 shape="circle"
                 icon={<MinusOutlined />}
                 onClick={() => {
-                  console.log('-1');
+                  updateCurComponent(element, {
+                    ...element.style,
+                    width: element.style.width - 10,
+                  });
                 }}
               />
             </Space>
