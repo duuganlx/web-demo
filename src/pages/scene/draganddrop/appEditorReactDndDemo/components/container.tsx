@@ -1,7 +1,13 @@
 import { useModel } from '@umijs/max';
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { DragItemType, DragType, DraggableViewProvider, ItemConfig } from './draggableViewProvider';
+import { ItemConfig } from '../model';
+import {
+  DragItemType,
+  DragType,
+  DraggableViewProvider,
+  generateItemConfig,
+} from './draggableViewProvider';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ContainerProps {}
@@ -26,10 +32,10 @@ const Container: React.FC<ContainerProps> = () => {
         if (didDrop) return;
 
         if (currentDrag.dragType === DragType.Add) {
-          const item = {
-            id: currentDrag.id,
-            type: currentDrag.dragItemType,
-          };
+          const item = generateItemConfig(currentDrag.id, currentDrag.dragItemType);
+
+          if (!item) return;
+
           setItemList([...itemList, item]);
         }
       },
@@ -43,7 +49,17 @@ const Container: React.FC<ContainerProps> = () => {
   return (
     <div
       ref={drop}
-      style={{ width: '85vw', height: '80vh', backgroundColor: '#e6f7ff' }}
+      style={{
+        width: '85vw',
+        height: '80vh',
+        backgroundColor: '#e6f7ff',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
+      }}
       onClick={() => {
         setSelectingItem(null);
       }}

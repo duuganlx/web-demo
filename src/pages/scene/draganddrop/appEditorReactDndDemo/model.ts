@@ -1,5 +1,17 @@
 import { useCallback, useState } from 'react';
-import { DragItemType, DragType, ItemConfig } from './components/draggableViewProvider';
+import { DragItemType, DragType } from './components/draggableViewProvider';
+
+export interface StyleConfig {
+  width: number;
+  height: number;
+  zIndex: number;
+}
+
+export interface ItemConfig {
+  id: string;
+  type: DragItemType;
+  style: StyleConfig;
+}
 
 export interface DragOp {
   id: string;

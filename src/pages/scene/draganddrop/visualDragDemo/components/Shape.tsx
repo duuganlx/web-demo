@@ -174,7 +174,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
                 icon={<DeleteOutlined />}
                 onClick={() => {
                   const newRealtimeList = realtimeList.filter(
-                    (item) => item.id !== curComponent.id,
+                    (item) => item.id !== curComponent?.id,
                   );
                   setRealtimeList(newRealtimeList);
                 }}
