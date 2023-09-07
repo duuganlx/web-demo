@@ -153,4 +153,7 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+  jsMinifier: 'terser',
+  // esbuild: {
+  // },
 });

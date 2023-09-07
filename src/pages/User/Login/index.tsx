@@ -18,6 +18,7 @@ import {
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, Helmet, SelectLang, history, useIntl, useModel } from '@umijs/max';
 import { Alert, Tabs, message } from 'antd';
+import { Octokit } from 'octokit';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
@@ -142,6 +143,30 @@ const Login: React.FC = () => {
     }
   };
   const { status, type: loginType } = userLoginState;
+
+  const octokit = new Octokit({
+    auth: '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',
+  });
+
+  console.log('--1');
+  octokit
+    .request('GET /repos/{owner}/{repo}/contents/{path}', {
+      owner: 'duuganlx',
+      repo: 'datahub',
+      path: 'test.csv',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      const decodedContent = atob(res.data.content!);
+
+      console.log(decodedContent);
+    })
+    .catch((res) => {
+      console.log(res);
+    });
 
   return (
     <div className={containerClassName}>
