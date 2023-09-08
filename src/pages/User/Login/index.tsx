@@ -144,9 +144,7 @@ const Login: React.FC = () => {
   };
   const { status, type: loginType } = userLoginState;
 
-  const octokit = new Octokit({
-    auth: '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',
-  });
+  const octokit = new Octokit();
 
   console.log('--1');
   octokit

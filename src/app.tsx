@@ -18,17 +18,23 @@ export async function getInitialState(): Promise<{
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
+  // 如果是匿名用户也是可以访问，不需要原本的重定向到登录页
+
+  console.log('getInitialState()');
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser({
         skipErrorHandler: true,
       });
+
+      console.log('queryCurrentUser', msg);
       return msg.data;
     } catch (error) {
       history.push(loginPath);
     }
     return undefined;
   };
+
   // 如果不是登录页面，执行
   const { location } = history;
   if (location.pathname !== loginPath) {
