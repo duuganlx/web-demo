@@ -30,6 +30,7 @@ export async function getInitialState(): Promise<{
       console.log('queryCurrentUser', msg);
       return msg.data;
     } catch (error) {
+      console.log('queryCurrentUser err', error);
       history.push(loginPath);
     }
     return undefined;
