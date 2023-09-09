@@ -8,22 +8,21 @@ export async function currentUser(options?: { [key: string]: any }) {
     resolve({
       data: {
         access: 'admin',
-        address: '西湖区工专路 77 号',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        address: '',
+        avatar: '',
         country: 'China',
         geographic: {
           city: { label: '杭州市', key: '330100' },
           province: { label: '浙江省', key: '330000' },
         },
-        group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
-        name: 'Dugan LX',
+        group: '梦想无限',
+        name: 'anonymity',
         notifyCount: 12,
-        phone: '0752-268888888',
+        phone: '',
         signature: '海纳百川，有容乃大',
         tags: [
           { key: '0', label: '很有想法的' },
           { key: '1', label: '专注设计' },
-          { key: '2', label: '辣~' },
         ],
       },
       title: '交互专家',
