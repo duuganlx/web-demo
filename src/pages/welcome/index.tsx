@@ -1,5 +1,7 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { Tooltip, message } from 'antd';
+import { history } from '@umijs/max';
+import { Tooltip } from 'antd';
+import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import style from './index.less';
 
@@ -10,7 +12,7 @@ const Welcome: React.FC = () => {
   const className = useEmotionCss(() => {
     return {
       width: '100vw',
-      height: '100vh',
+      height: 'calc(100vh - 36px)',
       background: `url(engineer.png)`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
@@ -31,13 +33,42 @@ const Welcome: React.FC = () => {
 
       '.bottom': {
         position: 'absolute',
-        bottom: 0,
+        bottom: '1vh',
         display: 'flex',
         width: '100vw',
         height: '10vh',
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'pointer',
+      },
+
+      '.star': {
+        position: 'absolute',
+        width: '8px',
+        height: '8px',
+        backgroundColor: '#ffe58f',
+        border: '1px solid #ffe58f',
+        borderRadius: '8px',
+        cursor: 'pointer',
+      },
+
+      '.enter': {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        cursor: 'default',
+
+        '.rocket': {
+          transform: 'rotate(-45deg)',
+          fontSize: '24px',
+        },
+
+        '.rocket-label': {
+          fontSize: '16px',
+          visibility: showRocketTip ? 'visible' : 'hidden',
+          color: 'white',
+        },
       },
     };
   });
@@ -66,16 +97,17 @@ const Welcome: React.FC = () => {
       </div>
 
       <Tooltip title="成功" arrow overlayInnerStyle={{ fontSize: '16px' }}>
-        <div className={style.star} style={{ top: '9vh', left: '20vw' }} />
+        <div className={classNames(style.star, 'star')} style={{ top: '9vh', left: '20vw' }} />
       </Tooltip>
       <Tooltip title="幸福" arrow overlayInnerStyle={{ fontSize: '16px' }}>
-        <div className={style.star} style={{ top: '17vh', left: '57vw' }} />
+        <div className={classNames(style.star, 'star')} style={{ top: '17vh', left: '57vw' }} />
       </Tooltip>
 
       <div
         className="bottom"
         onClick={() => {
-          message.info('开发中，敬请期待...');
+          const homePath = '/home';
+          history.push(homePath);
         }}
         onMouseEnter={() => {
           setShowRocketTip(true);
@@ -84,18 +116,9 @@ const Welcome: React.FC = () => {
           setShowRocketTip(false);
         }}
       >
-        <div className={style.enter}>
-          <div
-            style={{
-              fontSize: '16px',
-              display: showRocketTip ? '' : 'none',
-              marginBottom: '10px',
-              color: 'white',
-            }}
-          >
-            首页
-          </div>
-          <div style={{ transform: 'rotate(-45deg)', fontSize: '24px' }}>&#x1F680;</div>
+        <div className={classNames(style.enter, 'enter')}>
+          <div className="rocket">&#x1F680;</div>
+          <div className="rocket-label">首页</div>
         </div>
       </div>
     </div>

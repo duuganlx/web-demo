@@ -12,6 +12,20 @@
  */
 export default [
   {
+    path: '/welcome',
+    redirect: '/',
+  },
+  {
+    path: '/',
+    name: 'welcome',
+    component: './welcome',
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: './home',
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
@@ -21,12 +35,6 @@ export default [
         component: './User/Login',
       },
     ],
-  },
-  {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './welcome',
   },
   {
     path: '/eam',
@@ -138,16 +146,6 @@ export default [
         component: './Admin',
       },
     ],
-  },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
-  {
-    path: '/',
-    redirect: '/welcome',
   },
   {
     path: '*',
