@@ -1,4 +1,4 @@
-import { AppstoreOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { AppstoreOutlined } from '@ant-design/icons';
 import { MenuDataItem } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Link } from '@umijs/max';
@@ -13,68 +13,68 @@ export type PopoverMenuViewProps = {
 };
 
 // 应用子项
-interface AppTypeItem {
-  id: number;
-  name: string;
-  path: string;
-  icon?: string | React.ReactNode;
-  // typeName?: string; // 应用类型名称
-  visible?: boolean; // 是否显示
-  parent?: number; // 父级id
-  children?: (AppTypeItem | MenuDataItem)[]; // 正常此处children 应支持3-4个类型的数组， 如
-  remark?: string;
-}
+// interface AppTypeItem {
+//   id: number;
+//   name: string;
+//   path: string;
+//   icon?: string | React.ReactNode;
+//   // typeName?: string; // 应用类型名称
+//   visible?: boolean; // 是否显示
+//   parent?: number; // 父级id
+//   children?: (AppTypeItem | MenuDataItem)[]; // 正常此处children 应支持3-4个类型的数组， 如
+//   remark?: string;
+// }
 
-const defaultApplist: AppTypeItem[] = [
-  {
-    id: -1,
-    name: '我的应用',
-    path: 'extra',
-    icon: <ShareAltOutlined />,
-    visible: true,
-    children: [
-      {
-        id: -3,
-        name: '编码开发',
-        path: 'extra1',
-        parent: -1,
-        children: [
-          {
-            id: -5,
-            name: 'github',
-            path: 'https://github.com/duganlxx',
-            parent: -3,
-          },
-        ],
-      },
-      {
-        id: -2,
-        name: '技术文档',
-        path: 'extra2',
-        parent: -1,
-        children: [
-          {
-            id: -4,
-            name: 'antd',
-            path: 'https://ant.design/index-cn',
-            parent: -2,
-          },
-          {
-            id: -6,
-            name: 'umijs',
-            path: 'https://umijs.org/',
-            parent: -2,
-          },
-        ],
-      },
-    ],
-  },
-];
+// const defaultApplist: AppTypeItem[] = [
+//   {
+//     id: -1,
+//     name: '我的应用',
+//     path: 'extra',
+//     icon: <ShareAltOutlined />,
+//     visible: true,
+//     children: [
+//       {
+//         id: -3,
+//         name: '编码开发',
+//         path: 'extra1',
+//         parent: -1,
+//         children: [
+//           {
+//             id: -5,
+//             name: 'github',
+//             path: 'https://github.com/duganlxx',
+//             parent: -3,
+//           },
+//         ],
+//       },
+//       {
+//         id: -2,
+//         name: '技术文档',
+//         path: 'extra2',
+//         parent: -1,
+//         children: [
+//           {
+//             id: -4,
+//             name: 'antd',
+//             path: 'https://ant.design/index-cn',
+//             parent: -2,
+//           },
+//           {
+//             id: -6,
+//             name: 'umijs',
+//             path: 'https://umijs.org/',
+//             parent: -2,
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];
 
 const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
   const { menuData } = props;
 
-  const validRouters = [...(menuData || []), ...defaultApplist];
+  const validRouters = [...(menuData || [])];
   const validMap: Record<string, any> = {};
   validRouters.forEach((item) => {
     validMap[item.name!] = item;
@@ -85,7 +85,6 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
 
   const menuContentClass = useEmotionCss(({ token }) => {
     return {
-      // backgroundColor: token.colorPrimaryHover,
       backgroundColor: token.colorBgElevated,
       // 菜单栏左侧一级菜单栏 css样式效果
       '.block-left': {

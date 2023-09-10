@@ -12,86 +12,103 @@
  */
 export default [
   {
-    path: '/welcome',
-    redirect: '/',
-  },
-  {
     path: '/',
-    name: 'welcome',
-    component: './welcome',
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: './home',
-  },
-  {
-    path: '/user',
-    layout: false,
+    name: '初识网站',
+    icon: 'CrownOutlined',
     routes: [
       {
-        name: 'login',
-        path: '/user/login',
-        component: './User/Login',
-      },
-    ],
-  },
-  {
-    path: '/eam',
-    name: 'EAM',
-    icon: 'DeploymentUnitOutlined',
-    hideInBreadcrumb: true,
-    routes: [
-      {
-        name: '数据资讯',
-        path: '/eam/datainfo',
-        hideInBreadcrumb: true,
+        name: '网站入口',
+        path: '/',
         routes: [
           {
-            path: 'eam/datainfo/infowatch',
-            name: '实时资讯',
-            component: './eam/datainfo/infoWatch',
+            path: '/welcome',
+            redirect: '/',
           },
           {
-            path: '/eam/datainfo/datamarket',
-            name: '数据集市',
-            component: './eam/datainfo/dataMarket',
+            path: '/',
+            name: '欢迎页',
+            component: './desc/welcome',
           },
           {
-            path: '/eam/datainfo/cardmarket',
-            name: '卡片集市',
-            component: './eam/datainfo/cardMarket',
-            hideInBreadcrumb: true,
+            path: '/home',
+            name: '首页',
+            component: './desc/home',
           },
         ],
       },
       {
-        name: '运营管理',
-        path: '/eam/operation',
+        name: '关于我',
+        path: '/me',
         routes: [
           {
-            path: '/eam/operation/settlementDetails',
-            name: '结算明细报表',
-            component: './eam/operation/settlementDetails',
+            name: '个人介绍',
+            path: '/me',
+            component: './desc/me',
           },
-        ],
-      },
-      {
-        name: '量化投研',
-        path: '/eam/investmentquant',
-        routes: [
           {
-            path: '/eam/investmentquant/analystCoverage',
-            name: '分析师行业覆盖',
-            component: './eam/investmentquant/analystCoverage',
+            name: 'github',
+            path: 'https://github.com/duganlx',
           },
         ],
       },
     ],
   },
+  // {
+  //   path: '/d',
+  //   name: '样例场景',
+  //   icon: 'DeploymentUnitOutlined',
+  //   hideInBreadcrumb: true,
+  //   routes: [
+  //     {
+  //       name: '数据资讯',
+  //       path: '/layoutd/datainfo',
+  //       hideInBreadcrumb: true,
+  //       routes: [
+  //         {
+  //           path: 'layoutd/datainfo/infowatch',
+  //           name: '实时资讯',
+  //           component: './layoutd/datainfo/infoWatch',
+  //         },
+  //         {
+  //           path: '/eam/datainfo/datamarket',
+  //           name: '数据集市',
+  //           component: './eam/datainfo/dataMarket',
+  //         },
+  //         {
+  //           path: '/eam/datainfo/cardmarket',
+  //           name: '卡片集市',
+  //           component: './eam/datainfo/cardMarket',
+  //           hideInBreadcrumb: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: '运营管理',
+  //       path: '/eam/operation',
+  //       routes: [
+  //         {
+  //           path: '/eam/operation/settlementDetails',
+  //           name: '结算明细报表',
+  //           component: './eam/operation/settlementDetails',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: '量化投研',
+  //       path: '/eam/investmentquant',
+  //       routes: [
+  //         {
+  //           path: '/eam/investmentquant/analystCoverage',
+  //           name: '分析师行业覆盖',
+  //           component: './eam/investmentquant/analystCoverage',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     path: '/scene',
-    name: '场景样例',
+    name: '样例场景',
     icon: 'StarOutlined',
     routes: [
       {
@@ -101,49 +118,32 @@ export default [
         hideInBreadcrumb: true,
       },
       {
-        name: '数据集市',
+        name: '布局设计',
         path: '/scene/datamarket',
         component: './scene/DataMarket',
         hideInBreadcrumb: true,
       },
       {
-        name: '拖拽',
-        path: '/scene/draganddrop',
+        name: '拖拽设计',
+        path: '/scene/dnd',
         hideInBreadcrumb: true,
         routes: [
           {
-            path: '/scene/draganddrop/reactdnd',
+            path: '/scene/dnd/reactdnd',
             name: 'react DnD',
             component: './scene/draganddrop/reactdndDemo',
           },
           {
-            path: '/scene/draganddrop/visualdrag',
+            path: '/scene/dnd/visualdrag',
             name: 'visual drag demo',
             component: './scene/draganddrop/visualDragDemo',
           },
           {
-            path: '/scene/draganddrop/appeditorreactdndts',
+            path: '/scene/dnd/appeditorreactdndts',
             name: 'app editor react dnd ts',
             component: './scene/draganddrop/appEditorReactDndDemo',
           },
         ],
-      },
-    ],
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin',
-        redirect: '/admin/sub-page',
-      },
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
       },
     ],
   },
