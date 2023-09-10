@@ -1,31 +1,38 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { SelectLang as UmiSelectLang } from '@umijs/max';
-import React from 'react';
+import { GithubOutlined, UserOutlined } from '@ant-design/icons';
+import { history } from '@umijs/max';
+import { Tooltip } from 'antd';
 
 export type SiderTheme = 'light' | 'dark';
 
-export const SelectLang = () => {
-  return (
-    <UmiSelectLang
-      style={{
-        padding: 4,
-      }}
-    />
-  );
-};
-
-export const Question = () => {
+export const Github = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        height: 26,
+        color: 'white',
+        fontSize: '16px',
+        marginRight: '5px',
       }}
       onClick={() => {
-        window.open('https://pro.ant.design/docs/getting-started');
+        window.open('https://github.com/duganlx');
       }}
     >
-      <QuestionCircleOutlined />
+      <GithubOutlined />
+    </div>
+  );
+};
+
+export const AboutMe = () => {
+  return (
+    <div
+      style={{ color: 'white', fontSize: '16px' }}
+      onClick={() => {
+        const path = '/me';
+        history.push(path);
+      }}
+    >
+      <Tooltip title="关于我" placement="bottom">
+        <UserOutlined />
+      </Tooltip>
     </div>
   );
 };

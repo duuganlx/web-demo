@@ -17,7 +17,7 @@ export default [
     icon: 'CrownOutlined',
     routes: [
       {
-        name: '网站入口',
+        name: '网站说明',
         path: '/',
         routes: [
           {
@@ -34,20 +34,10 @@ export default [
             name: '首页',
             component: './desc/home',
           },
-        ],
-      },
-      {
-        name: '关于我',
-        path: '/me',
-        routes: [
           {
             name: '个人介绍',
             path: '/me',
             component: './desc/me',
-          },
-          {
-            name: 'github',
-            path: 'https://github.com/duganlx',
           },
         ],
       },

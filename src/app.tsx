@@ -3,6 +3,7 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
+import { AboutMe, Github } from './components';
 import PopoverMenuView from './components/PopoverMenu';
 import { LayoutContentView } from './layoutContent';
 import { errorConfig } from './requestErrorConfig';
@@ -54,7 +55,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    // actionsRender: () => [<Question key="doc" />, <SelectLang key="SelectLang" />],
+    actionsRender: () => [<AboutMe key="aboutMe" />, <Github key="github" />],
     // avatarProps: {
     //   src: initialState?.currentUser?.avatar,
     //   title: <AvatarName />,
