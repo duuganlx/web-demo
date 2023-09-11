@@ -83,6 +83,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
           '.ant-pro-top-nav-header-menu > *': {
             '.popover-menu-icon': {
               color: 'white',
+              fontSize: '15px',
               cursor: 'pointer',
               padding: '2px 8px',
               display: 'inline-block',

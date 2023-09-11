@@ -9,7 +9,7 @@ export const Github = () => {
     <div
       style={{
         color: 'white',
-        fontSize: '16px',
+        fontSize: '18px',
         marginRight: '5px',
       }}
       onClick={() => {
@@ -24,7 +24,7 @@ export const Github = () => {
 export const AboutMe = () => {
   return (
     <div
-      style={{ color: 'white', fontSize: '16px' }}
+      style={{ color: 'white', fontSize: '18px' }}
       onClick={() => {
         const path = '/me';
         history.push(path);
