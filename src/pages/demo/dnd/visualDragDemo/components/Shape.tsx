@@ -30,7 +30,7 @@ const Shape: React.FC<ShapeProps> = (props) => {
     setRealtimeList,
     updateCurComponent,
     setCurComponent,
-  } = useModel('scene.draganddrop.visualDragDemo.model', (model) => ({
+  } = useModel('demo.dnd.visualDragDemo.model', (model) => ({
     curComponent: model.curComponent,
     realtimeList: model.realtimeList,
     canvasStyle: model.canvasStyle,

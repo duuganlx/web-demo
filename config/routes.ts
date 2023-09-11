@@ -43,95 +43,73 @@ export default [
       },
     ],
   },
-  // {
-  //   path: '/d',
-  //   name: '样例场景',
-  //   icon: 'DeploymentUnitOutlined',
-  //   hideInBreadcrumb: true,
-  //   routes: [
-  //     {
-  //       name: '数据资讯',
-  //       path: '/layoutd/datainfo',
-  //       hideInBreadcrumb: true,
-  //       routes: [
-  //         {
-  //           path: 'layoutd/datainfo/infowatch',
-  //           name: '实时资讯',
-  //           component: './layoutd/datainfo/infoWatch',
-  //         },
-  //         {
-  //           path: '/eam/datainfo/datamarket',
-  //           name: '数据集市',
-  //           component: './eam/datainfo/dataMarket',
-  //         },
-  //         {
-  //           path: '/eam/datainfo/cardmarket',
-  //           name: '卡片集市',
-  //           component: './eam/datainfo/cardMarket',
-  //           hideInBreadcrumb: true,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: '运营管理',
-  //       path: '/eam/operation',
-  //       routes: [
-  //         {
-  //           path: '/eam/operation/settlementDetails',
-  //           name: '结算明细报表',
-  //           component: './eam/operation/settlementDetails',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: '量化投研',
-  //       path: '/eam/investmentquant',
-  //       routes: [
-  //         {
-  //           path: '/eam/investmentquant/analystCoverage',
-  //           name: '分析师行业覆盖',
-  //           component: './eam/investmentquant/analystCoverage',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
   {
-    path: '/scene',
-    name: '样例场景',
-    icon: 'StarOutlined',
+    path: '/demo',
+    name: '可行实验',
+    icon: 'ExperimentOutlined',
+    hideInBreadcrumb: true,
     routes: [
       {
-        name: '绘图',
-        path: '/scene/operstldetail',
-        component: './scene/OperStlDetail',
-        hideInBreadcrumb: true,
+        name: '组件',
+        path: '/demo/comp',
+        routes: [
+          {
+            path: '/demo/comp/drawing',
+            name: '绘图',
+            component: './demo/comp/drawing',
+            hideInBreadcrumb: true,
+          },
+        ],
       },
       {
-        name: '布局设计',
-        path: '/scene/datamarket',
-        component: './scene/DataMarket',
-        hideInBreadcrumb: true,
-      },
-      {
-        name: '拖拽设计',
-        path: '/scene/dnd',
+        name: '布局',
+        path: '/demo/layout',
         hideInBreadcrumb: true,
         routes: [
           {
-            path: '/scene/dnd/reactdnd',
+            path: '/demo/layout/dataMarket',
+            name: '数据集市',
+            component: './demo/layout/dataMarket',
+            hideInBreadcrumb: true,
+          },
+        ],
+      },
+      {
+        name: '表格',
+        path: '/demo/table',
+        hideInBreadcrumb: true,
+        routes: [
+          {
+            path: '/demo/table/antd',
+            name: 'antd',
+            component: './demo/table/antdT',
+          },
+          {
+            path: '/demo/table/s2table',
+            name: 's2table',
+            component: './demo/table/s2table',
+          },
+        ],
+      },
+      {
+        name: '拖拽',
+        path: '/demo/dnd',
+        hideInBreadcrumb: true,
+        routes: [
+          {
+            path: '/demo/dnd/reactdnd',
             name: 'react DnD',
-            component: './scene/draganddrop/reactdndDemo',
+            component: './demo/dnd/reactdndDemo',
           },
           {
-            path: '/scene/dnd/visualdrag',
+            path: '/demo/dnd/visualdrag',
             name: 'visual drag demo',
-            component: './scene/draganddrop/visualDragDemo',
+            component: './demo/dnd/visualDragDemo',
           },
           {
-            path: '/scene/dnd/appeditorreactdndts',
+            path: '/demo/dnd/appeditorreactdndts',
             name: 'app editor react dnd ts',
-            component: './scene/draganddrop/appEditorReactDndDemo',
+            component: './demo/dnd/appEditorReactDndDemo',
           },
         ],
       },

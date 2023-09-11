@@ -69,7 +69,7 @@ const DraggableView: React.FC<DraggableViewProps> = (props) => {
   const { index, selectingItem, setSelectingItem } = option;
 
   const { currentDrag, itemList, setCurrentDrag, setItemList } = useModel(
-    'scene.draganddrop.appEditorReactDndDemo.model',
+    'demo.dnd.appEditorReactDndDemo.model',
     (model) => ({
       itemList: model.itemList,
       currentDrag: model.currentDrag,

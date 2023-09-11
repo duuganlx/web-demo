@@ -11,7 +11,7 @@ interface LeftPanelItemProps {
 const LeftPanelItem: React.FC<LeftPanelItemProps> = (props) => {
   let { label, type } = props;
 
-  const { setCurrentDrag } = useModel('scene.draganddrop.appEditorReactDndDemo.model', (model) => ({
+  const { setCurrentDrag } = useModel('demo.dnd.appEditorReactDndDemo.model', (model) => ({
     setCurrentDrag: model.upCurrentDrag,
   }));
 

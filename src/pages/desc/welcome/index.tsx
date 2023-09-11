@@ -74,7 +74,7 @@ const Welcome: React.FC = () => {
   });
 
   useEffect(() => {
-    const titleContent = '我有一个梦想，想去那发光的星球上看看🤔...';
+    const titleContent = '我想去那发光的星球上看看🤔...';
     let index = 0;
     const renderTitle = () => {
       index++;

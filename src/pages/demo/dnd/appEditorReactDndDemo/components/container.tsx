@@ -14,7 +14,7 @@ interface ContainerProps {}
 
 const Container: React.FC<ContainerProps> = () => {
   const { itemList, currentDrag, setItemList } = useModel(
-    'scene.draganddrop.appEditorReactDndDemo.model',
+    'demo.dnd.appEditorReactDndDemo.model',
     (model) => ({
       itemList: model.itemList,
       currentDrag: model.currentDrag,
