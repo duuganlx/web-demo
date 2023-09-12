@@ -53,6 +53,7 @@
     "@antv/g2plot": "^2.4.31",
     "@antv/s2": "^1.50.0",
     "@antv/s2-react": "^1.43.0",
+    "@octokit/core": "^5.0.0",
     "@umijs/route-utils": "^2.2.2",
     "antd": "^5.5.1",
     "classnames": "^2.3.2",
