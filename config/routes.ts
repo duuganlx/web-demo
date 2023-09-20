@@ -59,6 +59,12 @@ export default [
             component: './demo/comp/drawing',
             hideInBreadcrumb: true,
           },
+          {
+            path: '/demo/comp/markdown',
+            name: 'markdown',
+            component: './demo/comp/markdown',
+            hideInBreadcrumb: true,
+          },
         ],
       },
       {
